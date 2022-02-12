@@ -1,12 +1,22 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Play</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
+
+<script>
+export default {
+  beforeMount() {
+    if (this.$store.state.countries.length == 0) {
+      this.$store.dispatch("fetchCountriesFromAPI");
+    }
+  },
+};
+</script>
 
 <style>
 #app {
