@@ -7,10 +7,18 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     countries: [],
+    score: 0,
+    session: [],
   },
   mutations: {
     setCountries(state, countries) {
       state.countries = countries;
+    },
+    incrementScore(state) {
+      state.score++;
+    },
+    pushToSession(state, payload) {
+      state.session.push(payload);
     },
   },
   actions: {

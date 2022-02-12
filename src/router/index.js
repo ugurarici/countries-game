@@ -2,19 +2,25 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Play from "../views/Play.vue";
+import Session from "../views/Session.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
+    name: "Home",
+    component: Home,
+  },
+  {
+    path: "/play",
     name: "Play",
     component: Play,
   },
   {
-    path: "/home",
-    name: "Home",
-    component: Home,
+    path: "/session",
+    name: "Session",
+    component: Session,
   },
   {
     path: "/about",
