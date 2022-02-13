@@ -1,33 +1,17 @@
 <template>
   <div>
     SCORE: <strong>{{ score }}</strong> / {{ $store.state.session.length }}
-    <hr />
-    <div v-if="country">
-      <img :src="country.flags.svg" style="max-width: 100%" /><br />
-      <div
-        style="
-          display: grid;
-          grid-gap: 1rem;
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: 1fr 1fr;
-        "
-      >
-        <div
+
+    <div v-if="country" class="max-w-full md:max-w-screen-sm mx-auto p-2">
+      <img :src="country.flags.svg" class="w-full" /><br />
+      <div class="grid grid-cols-2 grid-rows-2 gap-2">
+        <option-button
           v-for="(option, key) in options"
-          :key="key"
-          @click.prevent="optionSelected(key)"
-          style="
-            background-color: #ccc;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.2rem;
-            cursor: pointer;
-          "
+          :key="key + '-' + country.cca2"
+          @click="optionSelected(key)"
         >
           {{ option }}
-        </div>
+        </option-button>
       </div>
     </div>
   </div>
@@ -48,6 +32,7 @@
 //  her tur aynı şekilde işler
 
 var _ = require("lodash");
+import OptionButton from "../components/OptionButton.vue";
 
 export default {
   data() {
@@ -55,6 +40,9 @@ export default {
       country: null,
       options: [],
     };
+  },
+  components: {
+    OptionButton,
   },
   computed: {
     countries() {
@@ -76,7 +64,6 @@ export default {
       this.options.push(randomCountry.name.common);
 
       for (let index = 0; index < 3; index++) {
-        console.log("hop");
         randomCountry = this.selectARandomCountry();
         if (this.options.indexOf(randomCountry.name.common) == -1) {
           this.options.push(randomCountry.name.common);
@@ -88,6 +75,7 @@ export default {
       this.options = _.shuffle(this.options);
     },
     optionSelected(key) {
+      console.log("aman da aman tıklandı");
       if (this.options[key] == this.country.name.common) {
         console.log("GERÇEKTEN DE DOĞRU CEVAP!");
         this.$store.commit("incrementScore");
