@@ -9,6 +9,8 @@ export default new Vuex.Store({
     countries: [],
     score: 0,
     session: [],
+    currentQuestionCountry: null,
+    currentQuestionOptions: [],
   },
   mutations: {
     setCountries(state, countries) {
@@ -23,6 +25,14 @@ export default new Vuex.Store({
     resetState(state) {
       state.score = 0;
       state.session = [];
+      state.currentQuestionCountry = null;
+      state.currentQuestionOptions = [];
+    },
+    setCurrentQuestionCountry(state, payload) {
+      state.currentQuestionCountry = payload;
+    },
+    setCurrentQuestionOptions(state, payload) {
+      state.currentQuestionOptions = payload;
     },
   },
   actions: {

@@ -2,11 +2,14 @@
   <div id="app" class="h-screen flex flex-col justify-between">
     <div id="nav" class="p-6">
       <router-link to="/">Home</router-link> |
-      <template v-if="$store.state.countries.length > 0">
-        <router-link to="/play">Play</router-link> |
+      <template v-if="$store.state.countries.length > 0 && !isGameFinished">
+        <router-link to="/play">Play</router-link>
       </template>
-      <router-link to="/session">Session</router-link> |
-      <a href="#" @click.prevent="$store.dispatch('resetState')">Reset</a>
+      <template v-if="isGameFinished">
+        <router-link to="/session">Result</router-link>
+      </template>
+      |
+      <a href="#" @click.prevent="restartGame()">Restart</a>
     </div>
     <router-view class="overflow-scroll" />
     <div id="footer" class="p-2">
@@ -21,6 +24,20 @@ export default {
     if (this.$store.state.countries.length == 0) {
       this.$store.dispatch("fetchCountriesFromAPI");
     }
+  },
+  methods: {
+    restartGame() {
+      this.$store.dispatch("resetState");
+      this.$router.push("/play");
+    },
+  },
+  computed: {
+    session() {
+      return this.$store.state.session;
+    },
+    isGameFinished() {
+      return this.session.length >= 20;
+    },
   },
 };
 </script>

@@ -35,12 +35,6 @@ var _ = require("lodash");
 import OptionButton from "../components/OptionButton.vue";
 
 export default {
-  data() {
-    return {
-      country: null,
-      options: [],
-    };
-  },
   components: {
     OptionButton,
   },
@@ -51,6 +45,15 @@ export default {
     score() {
       return this.$store.state.score;
     },
+    session() {
+      return this.$store.state.session;
+    },
+    country() {
+      return this.$store.state.currentQuestionCountry;
+    },
+    options() {
+      return this.$store.state.currentQuestionOptions;
+    },
   },
   methods: {
     selectARandomCountry() {
@@ -59,32 +62,30 @@ export default {
     },
     setupGameTour() {
       var randomCountry = this.selectARandomCountry();
-      this.country = randomCountry;
-      this.options = [];
-      this.options.push(randomCountry.name.common);
+      var options = [];
+      options.push(randomCountry.name.common);
 
       for (let index = 0; index < 3; index++) {
         randomCountry = this.selectARandomCountry();
-        if (this.options.indexOf(randomCountry.name.common) == -1) {
-          this.options.push(randomCountry.name.common);
+        if (options.indexOf(randomCountry.name.common) == -1) {
+          options.push(randomCountry.name.common);
         } else {
           index--;
         }
       }
 
-      this.options = _.shuffle(this.options);
+      options = _.shuffle(options);
+
+      this.$store.commit("setCurrentQuestionCountry", randomCountry);
+      this.$store.commit("setCurrentQuestionOptions", options);
     },
     optionSelected(key) {
-      console.log("aman da aman tıklandı");
       if (this.options[key] == this.country.name.common) {
-        console.log("GERÇEKTEN DE DOĞRU CEVAP!");
         this.$store.commit("incrementScore");
         this.$confetti.start();
         setTimeout(() => {
           this.$confetti.stop();
         }, 500);
-      } else {
-        console.log("olmadı be");
       }
       this.$store.commit("pushToSession", {
         country: this.country,
@@ -95,11 +96,29 @@ export default {
     },
   },
   beforeMount() {
+    if (this.session.length >= 20) {
+      this.$router.push("/session");
+    }
+
     if (this.countries.length < 1) {
       this.$router.push("/");
     } else {
-      this.setupGameTour();
+      if (this.country == null) {
+        this.setupGameTour();
+      }
     }
+  },
+  watch: {
+    session() {
+      if (this.session.length >= 20) {
+        this.$router.push("/session");
+      }
+    },
+    country(newValue) {
+      if (newValue == null) {
+        this.$router.push("/");
+      }
+    },
   },
 };
 </script>
