@@ -28,7 +28,7 @@ export default {
   methods: {
     restartGame() {
       this.$store.dispatch("resetState");
-      this.$router.push("/play");
+      this.$router.push("/");
     },
   },
   computed: {
