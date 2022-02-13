@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="h-full">
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <template v-if="$store.state.countries.length > 0">

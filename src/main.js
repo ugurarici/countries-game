@@ -4,6 +4,7 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import VueConfetti from "vue-confetti";
+import './assets/tailwind.css'
 
 Vue.use(VueConfetti);
 
