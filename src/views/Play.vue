@@ -91,6 +91,10 @@ export default {
       if (this.options[key] == this.country.name.common) {
         console.log("GERÇEKTEN DE DOĞRU CEVAP!");
         this.$store.commit("incrementScore");
+        this.$confetti.start();
+        setTimeout(() => {
+          this.$confetti.stop();
+        }, 500);
       } else {
         console.log("olmadı be");
       }

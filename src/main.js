@@ -3,6 +3,9 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import VueConfetti from "vue-confetti";
+
+Vue.use(VueConfetti);
 
 Vue.config.productionTip = false;
 
