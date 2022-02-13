@@ -20,6 +20,10 @@ export default new Vuex.Store({
     pushToSession(state, payload) {
       state.session.push(payload);
     },
+    resetState(state) {
+      state.score = 0;
+      state.session = [];
+    },
   },
   actions: {
     fetchCountriesFromAPI({ commit }) {
@@ -28,6 +32,9 @@ export default new Vuex.Store({
         .then((data) => {
           commit("setCountries", data);
         });
+    },
+    resetState({ commit }) {
+      commit("resetState");
     },
   },
   modules: {},

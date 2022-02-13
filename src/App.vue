@@ -6,7 +6,8 @@
         <router-link to="/play">Play</router-link> |
       </template>
       <router-link to="/session">Session</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <a href="#" @click.prevent="$store.dispatch('resetState')">Reset</a>
     </div>
     <router-view />
   </div>

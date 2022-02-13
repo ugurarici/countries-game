@@ -1,16 +1,34 @@
 <template>
   <div>
-    SCORE: <strong>{{ score }}</strong>
+    SCORE: <strong>{{ score }}</strong> / {{ $store.state.session.length }}
     <hr />
     <div v-if="country">
-      <img :src="country.flags.svg" height="250" /><br />
-      <button
-        v-for="(option, key) in options"
-        :key="key"
-        @click.prevent="optionSelected(key)"
+      <img :src="country.flags.svg" style="max-width: 100%" /><br />
+      <div
+        style="
+          display: grid;
+          grid-gap: 1rem;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+        "
       >
-        {{ option }}
-      </button>
+        <div
+          v-for="(option, key) in options"
+          :key="key"
+          @click.prevent="optionSelected(key)"
+          style="
+            background-color: #ccc;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.2rem;
+            cursor: pointer;
+          "
+        >
+          {{ option }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
